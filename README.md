@@ -23,6 +23,7 @@
 3. php hirlevel rendszer
 4. wbesocket -> php + js
 5. regisztrációnál interaktívan lehet hobbyt, foglalkozást, kedvenc sportot, kedvenc zenei előadót választani -> személyreszabott termékek ajánlása
+6. virtual wallet
 
 # ADATBÁZIS TERV
 (MINDEN ANGOL AZ EGYSÉG KEDVÉÉRT)
@@ -33,6 +34,8 @@
     - email         VARCHAR
     - bornDate      DATE
     - type          VARCHAR -> felhasznalonak a tipusa (admin, user)
+    - badge         VARCHAR -> kiemelt jelvenyek, juttatasok
+    - coupon        VARCHAR -> ha valamilyen juttatasban reszesul
     - hobby         VARCHAR
     - work          VARCHAR
     - sport         VARCHAR
@@ -40,10 +43,11 @@
 - products
     - id            INT
     - uid           INT -> foreign key -> users.id
-    - name          VARCHAR
+    - title          VARCHAR
     - description   VARCHAR
     - images        VARCHAR -> , separator
     - postDate      DATE
     - owner         VARCHAR
     - price         INT
+    - priceMin      INT
     - pPrice        VARCHAR -> previous price (tombben tarolja az elozo arakat es ebbol ijra ki a grafikont)
