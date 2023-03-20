@@ -16,8 +16,13 @@
 4. Admin termék feltöltés
 5. User termék megjelenítés
 
+# DESIGN
+- menusor legalul
+- termekek listazasa telefonon tiktok/insta szeruen
+- termek licit -> bybit app
+- termekek ara grafikonszeruen megjelenik
 
-# KÉSÖBBI FEATUREOK
+# KÉSÖBBI FEATUREOKW
 1. popup felület -> hirlevel
 2. google maps
 3. php hirlevel rendszer
@@ -36,6 +41,7 @@
     - type          VARCHAR -> felhasznalonak a tipusa (admin, user)
     - badge         VARCHAR -> kiemelt jelvenyek, juttatasok
     - coupon        VARCHAR -> ha valamilyen juttatasban reszesul
+    - level         INT
     - hobby         VARCHAR
     - work          VARCHAR
     - sport         VARCHAR
