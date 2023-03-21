@@ -22,7 +22,7 @@
 - termek licit -> bybit app
 - termekek ara grafikonszeruen megjelenik
 
-# KÉSÖBBI FEATUREOKW
+# KÉSÖBBI FEATUREOK
 1. popup felület -> hirlevel
 2. google maps
 3. php hirlevel rendszer
