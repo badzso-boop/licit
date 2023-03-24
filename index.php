@@ -10,15 +10,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adnijo</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+
 
     <script src="js/script.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 
     <div class="container">
         <?php 
@@ -37,27 +39,37 @@
                     <div>
                         <form action="includes/signup.inc.php" method="post">
                             <div class="form-group">
+                                <!--TELJES NÉV-->
                                 <label for="exampleInputEmail1">Teljes név</label>
                                 <input type="text" name="name" class="form-control" placeholder="Teljes név">
                             </div>
                             <div class="form-group">
+                                <!--FELHASZNÁLÓNÉV-->
                                 <label for="exampleInputEmail1">Felhasználónév</label>
                                 <input type="text" name="fname" class="form-control" placeholder="Felhasználónév">
                             </div>
                             <div class="form-group">
+                                <!--E-MAIL CÍM-->
                                 <label for="exampleInputEmail1">Email cím</label>
                                 <input type="email" name="email" class="form-control" placeholder="Email">
                                 <small id="emailHelp" class="form-text text-muted">Az adatai biztonságban vannak nálunk!</small>
                             </div>
                             <div class="form-group">
+                                <!--DÁTUM-->
+                                <label for="exampleInputEmail1">Dátum</label>
+                                <input type="date" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <!--JELSZÓ-->
                                 <label for="exampleInputPassword1">Jelszó</label>
                                 <input type="password" name="jelszo" class="form-control" placeholder="Jelszó">
                             </div>
                             <div class="form-group">
+                                <!--JELSZÓ-->
                                 <label for="exampleInputPassword1">Jelszó újra</label>
                                 <input type="password" name="jelszorpt" class="form-control" placeholder="Jelszó újra">
                             </div>
-                            <button type="submit" class="btn btn-primary" name="reg">Regisztráció</button>
+                            <button type="submit" class="btn btn-primary mt-2" name="reg">Regisztráció</button>
                         </form>
                     </div>
                     
@@ -102,7 +114,7 @@
                                 <label for="exampleInputEmail1">Jelszó</label>
                                 <input type="password" name="jelszo" class="form-control" placeholder="Jelszó">
                             </div>
-                            <button type="submit" class="btn btn-primary" name="belep">Belépés</button>
+                            <button type="submit" class="btn btn-primary mt-2" name="belep">Belépés</button>
                         </form>
                     </div>
                     <?php
