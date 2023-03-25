@@ -57,7 +57,7 @@
                         if ($_SESSION["type"] == "admin") {
                             if ($users->num_rows > 0) {
                                 while($seged = $users->fetch_assoc()) {
-                                    echo '<div class="card" style="width: 18rem;">
+                                    echo '<div class="card d-inline-block m-2" style="width: 18rem;">
                                         <img src="img/'.$seged['profileImg'].'" class="card-img-top" alt="'.$seged['name'].'">
                                         <div class="card-body">
                                             <h5 class="card-title">'.$seged['name'].'</h5>
