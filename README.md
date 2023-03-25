@@ -22,6 +22,7 @@
     - 16 alatt nem lehet regelni
     - nincs 2 azonos felhasznalonev
     - nincs 2 azonos email, ha igen popup hogy elfelejtett jelszo
+    - **REGEX**
 - belépés
     - email cim/felhasznalonev alapjan
 - elfelejtett jelszo
@@ -75,7 +76,7 @@
     - owner         VARCHAR
     - price         INT
     - priceMin      INT
-    - __steppingPrice INT__
+    - steppingPrice INT
     - pPrice        VARCHAR -> previous price (tombben tarolja az elozo arakat es ebbol ijra ki a grafikont)
 - bid_table -> bid logging
     - id            INT
@@ -94,12 +95,16 @@
 # SQL
 - CREATE DATABASE IF NOT EXISTS adnijo DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 - CREATE TABLE users(
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uname VARCHAR(256) UNIQUE,
     name VARCHAR(256),
     email VARCHAR(256) UNIQUE,
     bornDate DATE,
     type VARCHAR(25),
+    pwd VARCHAR(512),
+    profileImg VARCHAR(256),
+    about VARCHAR(1024),
+    links VARCHAR(512),
     badge VARCHAR(512),
     coupon VARCHAR(255),
     level INT,
@@ -109,7 +114,7 @@
     music VARCHAR(256)
 );
 - CREATE TABLE products(
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid INT,
     title VARCHAR(256),
     description VARCHAR(512),
@@ -119,5 +124,6 @@
     price INT,
     priceMin INT,
     pPrice VARCHAR(512),
+    steppingPrice INT,
     FOREIGN KEY(uid) REFERENCES users(id)
 );

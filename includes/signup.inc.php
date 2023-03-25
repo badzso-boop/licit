@@ -1,9 +1,9 @@
 <?php
-
 if (isset($_POST["reg"])) {
   $name = $_POST["name"];
   $email = $_POST["email"];
   $username = $_POST["fname"];
+  $bornDate = $_POST['date'];
   $pwd = $_POST["jelszo"];
   $pwdRepeat = $_POST["jelszorpt"];
 
@@ -37,8 +37,7 @@ if (isset($_POST["reg"])) {
 		exit();
   }
 
-  createUser($conn, $name, $email, $username, $pwd);
-
+  createUser($conn, $name, $email, $username, $bornDate, $pwd);
 } else {
 	header("location: ../index.php");
     exit();

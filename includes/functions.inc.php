@@ -46,7 +46,7 @@ function pwdMatch($pwd, $pwdrepeat) {
 }
 
 function uidExists($conn, $username) {
-  $sql = "SELECT * FROM felhasznalok WHERE fnev = ?;";
+  $sql = "SELECT * FROM users WHERE uname = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 	 	header("location: ../index.php?error=stmtfailed");
@@ -69,8 +69,8 @@ function uidExists($conn, $username) {
 	mysqli_stmt_close($stmt);
 }
 
-function createUser($conn, $name, $email, $username, $pwd) {
-  $sql = "INSERT INTO felhasznalok (name, fnev, jelszo, email) VALUES (?, ?, ?, ?);";
+function createUser($conn, $name, $email, $username, $bornDate, $pwd) {
+  $sql = "INSERT INTO users (uname, name, email, bornDate, type, pwd, profileImg) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -79,8 +79,10 @@ function createUser($conn, $name, $email, $username, $pwd) {
 	}
 
 	$hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+	$type = "user";
+	$profileImg = "blank-user.png";
 
-	mysqli_stmt_bind_param($stmt, "ssss", $name, $username, $hashedPwd, $email);
+	mysqli_stmt_bind_param($stmt, "sssssss", $username, $name, $email, $bornDate, $type, $hashedPwd, $profileImg);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
@@ -103,7 +105,6 @@ function emptyInputLogin($username, $pwd) {
 	return $result;
 }
 
-
 function loginUser($conn, $username, $pwd) {
 	$uidExists = uidExists($conn, $username);
 
@@ -112,96 +113,27 @@ function loginUser($conn, $username, $pwd) {
 		exit();
 	}
 
-	$pwdHashed = $uidExists["jelszo"];
+	$pwdHashed = $uidExists["pwd"];
 	$checkPwd = password_verify($pwd, $pwdHashed);
 
 	if ($checkPwd === false) {
-		header("location: ../index.php?error=rosszBelepes");
+		header("location: ../index.php?error=rosszBelepesBelep");
 		exit();
 	}
 	elseif ($checkPwd === true) {
 		session_start();
-		$_SESSION["id"] = $uidExists["id"];
-		$_SESSION["fnev"] = $uidExists["fnev"];
+		$_SESSION["uname"] = $uidExists["uname"];
+		$_SESSION["type"] = $uidExists["type"];
 		header("location: ../index.php?error=noneBelepes");
 		exit();
 	}
 }
 #endregion
 
-/*-----------------------Kerdesek--------------*/
 
-#region
-function voteFeltoltes($conn, $kerdes, $valaszok, $eredmenyek, $felhasznalok) {
-	$sql = "INSERT INTO votes (kerdes, valaszok, eredmenyek, felhasznalok) VALUES (?, ?, ?, ?);";
-
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../index.php?error=stmtfailed");
-		exit();
-	}
-
-	mysqli_stmt_bind_param($stmt, "ssss", $kerdes, $valaszok, $eredmenyek, $felhasznalok);
-	mysqli_stmt_execute($stmt);
-	mysqli_stmt_close($stmt);
-	mysqli_close($conn);
-	header("location: ../index.php?error=none");
-	exit();
-}
-
-function szavazatLeadasa($conn, $valasztott, $uname, $kerdes) {
-	$sql = "SELECT * FROM votes WHERE kerdes = ?;";
-	$eredmeny;
-
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../index.php?error=stmtfailed");
-		exit();
-	}
-
-	mysqli_stmt_bind_param($stmt, "s", $kerdes);
-	mysqli_stmt_execute($stmt);
-
-	$resultData = mysqli_stmt_get_result($stmt);
-
-	if ($row = mysqli_fetch_assoc($resultData)) {
-		$eredmeny = $row;
-	}
-
-	mysqli_stmt_close($stmt);
-
-	$dbEredmeny = explode(",", $eredmeny['eredmenyek']);
-	$dbEredmeny[$valasztott]++;
-	$stringEredmeny = implode(",", $dbEredmeny);
-
-	if ($eredmeny['felhasznalok'] != "") {
-		$dbEredmenyUser = explode(",", $eredmeny['felhasznalok']);
-		array_push($dbEredmenyUser, $uname);
-		$stringEredmenyUser = implode(",", $dbEredmenyUser);
-	} else {
-		$stringEredmenyUser = $uname;
-	}
-	
-
-	$sql = "UPDATE votes SET eredmenyek = ?, felhasznalok = ? WHERE id = ?;";
-	$stmt = mysqli_stmt_init($conn);
-	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../index.php?error=stmtfailed");
-		exit();
-	}
-
-	mysqli_stmt_bind_param($stmt, "sss", $stringEredmeny, $stringEredmenyUser, $eredmeny['id']);
-	mysqli_stmt_execute($stmt);
-	mysqli_stmt_close($stmt);
-	mysqli_close($conn);
-	header("location: ../index.php?error=none");
-	exit();
-}
-
-function kerdoivekLekeres($conn) {
-    $sql = "SELECT * FROM votes";
+function getUsers($conn) {
+    $sql = "SELECT * FROM users";
 	$result = $conn->query($sql);
 
 	return $result;
 }
-#endregion

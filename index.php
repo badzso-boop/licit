@@ -24,8 +24,8 @@
 
     <div class="container">
         <?php 
-            if (isset($_SESSION['fnev'])) {
-                echo '<h2 class="text-center">Üdvözlöm kedves '.$_SESSION['fnev'].'!</h2>';
+            if (isset($_SESSION['uname'])) {
+                echo '<h2 class="text-center">Üdvözlöm kedves '.$_SESSION['uname'].'! Rangod: '.$_SESSION['type'].'</h2>';
             }
             else {
                 echo '<h2 class="text-center">Kérem lépjen be!</h2>';
@@ -34,105 +34,61 @@
         
         <div class="row">
             <div class="col">
-                <section>
-                    <h2>Regisztráció</h2>
-                    <div>
-                        <form action="includes/signup.inc.php" method="post">
-                            <div class="form-group">
-                                <!--TELJES NÉV-->
-                                <label for="exampleInputEmail1">Teljes név</label>
-                                <input type="text" name="name" class="form-control" placeholder="Teljes név">
-                            </div>
-                            <div class="form-group">
-                                <!--FELHASZNÁLÓNÉV-->
-                                <label for="exampleInputEmail1">Felhasználónév</label>
-                                <input type="text" name="fname" class="form-control" placeholder="Felhasználónév">
-                            </div>
-                            <div class="form-group">
-                                <!--E-MAIL CÍM-->
-                                <label for="exampleInputEmail1">Email cím</label>
-                                <input type="email" name="email" class="form-control" placeholder="Email">
-                                <small id="emailHelp" class="form-text text-muted">Az adatai biztonságban vannak nálunk!</small>
-                            </div>
-                            <div class="form-group">
-                                <!--DÁTUM-->
-                                <label for="exampleInputEmail1">Dátum</label>
-                                <input type="date" name="email" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <!--JELSZÓ-->
-                                <label for="exampleInputPassword1">Jelszó</label>
-                                <input type="password" name="jelszo" class="form-control" placeholder="Jelszó">
-                            </div>
-                            <div class="form-group">
-                                <!--JELSZÓ-->
-                                <label for="exampleInputPassword1">Jelszó újra</label>
-                                <input type="password" name="jelszorpt" class="form-control" placeholder="Jelszó újra">
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-2" name="reg">Regisztráció</button>
-                        </form>
-                    </div>
-                    
-                    <?php
-                        // Error messages
-                        if (isset($_GET["error"])) {
-                        if ($_GET["error"] == "uresBemenet") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Töltsd ki az összes mezőt!</div>';
-                        }
-                        else if ($_GET["error"] == "rosszfname") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Használj megfelelő felhasználónevet!</div>';
-                        }
-                        else if ($_GET["error"] == "rosszemail") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Használj megfelelő email címet!</div>';
-                        }
-                        else if ($_GET["error"] == "jelszoNemEgyezik") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Jelszavak nem egyeznek!</div>';
-                        }
-                        else if ($_GET["error"] == "stmtfailed") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Hupsz valami hiba történt!</div>';
-                        }
-                        else if ($_GET["error"] == "fnameHasznalt") {
-                            echo '<div class="alert alert-danger m-3" role="alert">Felhasználónév már foglalat!</div>';
-                        }
-                        else if ($_GET["error"] == "noneReg") {
-                            echo '<div class="alert alert-success m-3" role="alert">Gratulálok! Sikeres regisztráció!</div>';
-                        }
-                        }
-                    ?>
-                </section>
+                <?php include_once 'components/signup.php'; ?>
             </div>
             <div class="col">
-                <section>
-                    <h2>Belépés</h2>
-                    <div class="signup-form-form">
-                        <form action="includes/login.inc.php" method="post">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Teljes név</label>
-                                <input type="text" name="fname" class="form-control" placeholder="Felhasználónév">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Jelszó</label>
-                                <input type="password" name="jelszo" class="form-control" placeholder="Jelszó">
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-2" name="belep">Belépés</button>
-                        </form>
-                    </div>
-                    <?php
-                        // Error messages
-                        if (isset($_GET["error"])) {
-                            if ($_GET["error"] == "uresBemenetBelep") {
-                                echo '<div class="alert alert-danger m-3" role="alert">Töltsd ki az összes mezőt!</div>';
-                            }
-                            else if ($_GET["error"] == "rosszBelepesBelep") {
-                                echo '<div class="alert alert-danger m-3" role="alert">Hupsz nem stimmelnek az adatok!</div>';
-                            }
-                            else if ($_GET["error"] == "noneBelepes") {
-                                echo '<div class="alert alert-success m-3" role="alert">Gratulálok! Sikeres belépés!</div>';
-                            }
-                        }
-                    ?>
-                </section>
+                <?php include_once 'components/login.php'; ?>
             </div>
+        </div>
+        <a href="logout.php">Kilépés</a>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <section>
+                <?php 
+                    require_once 'includes/dbh.inc.php';
+                    require_once 'includes/functions.inc.php';
+        
+                    $users = getUsers($conn);
+        
+                    if ($users->num_rows > 0) {
+                        while($seged = $users->fetch_assoc()) {
+                            echo '<div class="card" style="width: 18rem;">
+                                <img src="img/'.$seged['profileImg'].'" class="card-img-top" alt="'.$seged['name'].'">
+                                <div class="card-body">
+                                    <h5 class="card-title">'.$seged['name'].'</h5>
+                                    <p class="card-text">Késöbbiekben ide jöhet a saját bemutatkozó szöveg!'.$seged['about'].'</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <h5>Felhasználónév</h5>
+                                        <p>'.$seged['uname'].'</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h5>Email</h5>
+                                        <p>'.$seged['email'].'</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h5>Születési dátum:</h5>
+                                        <p>'.$seged['bornDate'].'</p>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <h5>Típus</h5>
+                                        <p>'.$seged['type'].'</p>
+                                    </li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="#" class="card-link">Card link</a>
+                                    <a href="#" class="card-link">Another link</a>
+                                </div>
+                            </div>';
+                        }
+                    }
+
+                ?>
+            </section>
         </div>
     </div>
 </body>
