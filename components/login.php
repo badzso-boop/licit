@@ -13,17 +13,22 @@
             <button type="submit" class="btn btn-primary mt-2" name="belep">Belépés</button>
         </form>
     </div>
+    <div id="uzenetek">
+        <div id="emptyInputLogin" class="alert alert-danger m-3 d-none" role="alert">Töltsd ki az összes mezőt!</div>
+        <div id="errorLogin" class="alert alert-danger m-3 d-none" role="alert">Hupsz nem stimmelnek az adatok!</div>
+        <div id="goodLogin" class="alert alert-success m-3 d-none" role="alert">Gratulálok! Sikeres belépés!</div>
+    </div>
     <?php
         // Error messages
         if (isset($_GET["error"])) {
             if ($_GET["error"] == "uresBemenetBelep") {
-                echo '<div class="alert alert-danger m-3" role="alert">Töltsd ki az összes mezőt!</div>';
+                echo '<script type="text/javascript">removeHideClass("emptyInputLogin");</script>';
             }
             else if ($_GET["error"] == "rosszBelepesBelep") {
-                echo '<div class="alert alert-danger m-3" role="alert">Hupsz nem stimmelnek az adatok!</div>';
+                echo '<script type="text/javascript">removeHideClass("errorLogin");</script>';
             }
             else if ($_GET["error"] == "noneBelepes") {
-                echo '<div class="alert alert-success m-3" role="alert">Gratulálok! Sikeres belépés!</div>';
+                echo '<script type="text/javascript">removeHideClass("goodLogin");</script>';
             }
         }
     ?>

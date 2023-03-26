@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <!--DÁTUM-->
-                <label for="exampleInputEmail1">Dátum</label>
+                <label for="exampleInputEmail1">Születési dátum</label>
                 <input type="date" name="date" class="form-control">
             </div>
             <div class="form-group">
@@ -36,31 +36,40 @@
             <button type="submit" class="btn btn-primary mt-2" name="reg">Regisztráció</button>
         </form>
     </div>
+    <div id="uzenetek">
+        <div id="emptyInput" class="alert alert-danger m-3 d-none" role="alert">Töltsd ki az összes mezőt!</div>
+        <div id="badUname" class="alert alert-danger m-3 d-none" role="alert">Használj megfelelő felhasználónevet!</div>
+        <div id="badEmail" class="alert alert-danger m-3 d-none" role="alert">Használj megfelelő email címet!</div>
+        <div id="pwdDontMatch" class="alert alert-danger m-3 d-none" role="alert">Jelszavak nem egyeznek!</div>
+        <div id="error" class="alert alert-danger m-3 d-none" role="alert">Hupsz valami hiba történt!</div>
+        <div id="unameTaken" class="alert alert-danger m-3 d-none" role="alert">Felhasználónév már foglalat!</div>
+        <div id="good" class="alert alert-success m-3 d-none" role="alert">Gratulálok! Sikeres regisztráció!</div>
+    </div>
     
     <?php
         // Error messages
         if (isset($_GET["error"])) {
-        if ($_GET["error"] == "uresBemenet") {
-            echo '<div class="alert alert-danger m-3" role="alert">Töltsd ki az összes mezőt!</div>';
-        }
-        else if ($_GET["error"] == "rosszfname") {
-            echo '<div class="alert alert-danger m-3" role="alert">Használj megfelelő felhasználónevet!</div>';
-        }
-        else if ($_GET["error"] == "rosszemail") {
-            echo '<div class="alert alert-danger m-3" role="alert">Használj megfelelő email címet!</div>';
-        }
-        else if ($_GET["error"] == "jelszoNemEgyezik") {
-            echo '<div class="alert alert-danger m-3" role="alert">Jelszavak nem egyeznek!</div>';
-        }
-        else if ($_GET["error"] == "stmtfailed") {
-            echo '<div class="alert alert-danger m-3" role="alert">Hupsz valami hiba történt!</div>';
-        }
-        else if ($_GET["error"] == "fnameHasznalt") {
-            echo '<div class="alert alert-danger m-3" role="alert">Felhasználónév már foglalat!</div>';
-        }
-        else if ($_GET["error"] == "noneReg") {
-            echo '<div class="alert alert-success m-3" role="alert">Gratulálok! Sikeres regisztráció!</div>';
-        }
+            if ($_GET["error"] == "uresBemenet") {
+                echo '<script type="text/javascript">removeHideClass("emptyInput");</script>';
+            }
+            else if ($_GET["error"] == "rosszfname") {
+                echo '<script type="text/javascript">removeHideClass("badUname");</script>';
+            }
+            else if ($_GET["error"] == "rosszemail") {
+                echo '<script type="text/javascript">removeHideClass("badEmail");</script>';
+            }
+            else if ($_GET["error"] == "jelszoNemEgyezik") {
+                echo '<script type="text/javascript">removeHideClass("pwdDontMatch");</script>';
+            }
+            else if ($_GET["error"] == "stmtfailed") {
+                echo '<script type="text/javascript">removeHideClass("error");</script>';
+            }
+            else if ($_GET["error"] == "fnameHasznalt") {
+                echo '<script type="text/javascript">removeHideClass("unameTaken");</script>';
+            }
+            else if ($_GET["error"] == "noneReg") {
+                echo '<script type="text/javascript">removeHideClass("good");</script>';
+            }
         }
     ?>
 </section>

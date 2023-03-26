@@ -92,7 +92,6 @@ function createUser($conn, $name, $email, $username, $bornDate, $pwd) {
 #endregion
 
 /*----------------------Belépés----------------*/
-
 #region
 function emptyInputLogin($username, $pwd) {
 	$result;
@@ -131,9 +130,38 @@ function loginUser($conn, $username, $pwd) {
 #endregion
 
 
+/*----------------------Felhasználók----------------*/
+
+#region
 function getUsers($conn) {
     $sql = "SELECT * FROM users";
 	$result = $conn->query($sql);
 
 	return $result;
 }
+
+function getSpecificUser($conn, $id) {
+	$sql = "SELECT * FROM users WHERE id=".$id.";";
+	$result = $conn->query($sql);
+
+	return $result;
+}
+
+function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music) {
+	$sql = "UPDATE users SET uname = ?, name = ?, email = ?,bornDate = ?,type = ?,profileImg = ?,about = ?,links = ?,badge = ?,coupon = ?,level = ?,hobby = ?,work = ?,sport = ?,music = ? WHERE id = ?";
+
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../index.php?error=stmtfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "ssssssssssssssss", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	mysqli_close($conn);
+	header("location: ../index.php?error=noneEdit");
+	exit();
+}
+
+#endregion

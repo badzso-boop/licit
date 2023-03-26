@@ -32,6 +32,7 @@
 
 # PHP EMAIL SYSTEM
 - elfelejtett jelszo
+- admin feluletbol uj jelszo kuldese
 
 # DESIGN
 - menusor legalul
