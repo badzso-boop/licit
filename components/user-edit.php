@@ -102,6 +102,7 @@
                                 <input type="text" name="music" class="form-control" value="'.$seged["music"].'">
                             </div>
                             <button type="submit" class="btn btn-primary mt-2" name="userEditSave">Mentés</button>
+                            <button type="submit" class="btn btn-primary mt-2" name="userEditBack">Vissza</button>
                         </form>';
                 }
             }

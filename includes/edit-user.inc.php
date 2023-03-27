@@ -26,3 +26,7 @@ if (isset($_POST["userEditSave"])) {
 
     updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music);
 }
+else if (isset($_POST["userEditBack"])) {
+    header("location: ../admin.php");
+    exit();
+}
