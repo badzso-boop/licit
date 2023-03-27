@@ -15,6 +15,7 @@
 3. Admin user management
 4. Admin termék feltöltés
 5. User termék megjelenítés
+6. navbar kesobb visszaallitasa a fejlesztoi kornyezetrol
 
 # FELADATOK
 - regisztráció

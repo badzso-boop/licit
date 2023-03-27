@@ -1,4 +1,6 @@
-<section>
+<?php include_once 'header.php' ?>
+
+<section class="m-3">
     <h2>Regisztráció</h2>
     <div>
         <form action="includes/signup.inc.php" method="post">
@@ -16,7 +18,7 @@
                 <!--E-MAIL CÍM-->
                 <label for="exampleInputEmail1">Email cím</label>
                 <input type="email" name="email" class="form-control" placeholder="Email">
-                <small id="emailHelp" class="form-text text-muted">Az adatai biztonságban vannak nálunk!</small>
+                <!-- <small id="emailHelp" class="form-text text-muted">Az adatai biztonságban vannak nálunk!</small> -->
             </div>
             <div class="form-group">
                 <!--DÁTUM-->

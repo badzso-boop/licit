@@ -8,13 +8,13 @@ if (isset($_POST["belep"])) {
   require_once 'functions.inc.php';
 
   if (emptyInputLogin($username, $pwd) === true) {
-    header("location: ../index.php?error=uresBemenetBelep");
+    header("location: ../login.php?error=uresBemenetBelep");
 		exit();
   }
   
   loginUser($conn, $username, $pwd);
 
 } else {
-	header("location: ../index.php");
+	header("location: ../login.php");
     exit();
 }

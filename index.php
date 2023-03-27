@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
     <?php include_once 'components/header.php' ?>
 <body>
 
@@ -13,31 +13,47 @@
                 echo '<h2 class="text-center">Üdvözlöm kedves '.$_SESSION['uname'].'! Rangod: '.$_SESSION['type'].'</h2>';
             }
             else {
-                echo '<h2 class="text-center">Kérem lépjen be!</h2>';
+                echo '<h1 class="text-center">Még nincs belépve hozzon létre egy fiókot vagy lépjen be!</h1>
+                        <div class="container text-center">
+                            <a class="d-inline-block nav-link text-center" href="login.php">
+                                <i class="bi bi-box-arrow-in-right icon"></i>
+                                <p class="icon-text">Belépés</p>
+                            </a>
+                            <a class="d-inline-block nav-link text-center" href="signup.php">
+                                <i class="bi bi-person-plus icon"></i>
+                                <p class="icon-text">Regisztráció</p>
+                            </a>
+                        </div>';
             }
         ?>
+
+        <div id="uzenetek">
+            <div id="good" class="alert alert-success m-3 d-none" role="alert">Gratulálok! Sikeres regisztráció!</div>
+            <div id="goodLogin" class="alert alert-success m-3 d-none" role="alert">Gratulálok! Sikeres belépés!</div>
+        </div>
+
+        <?php
+            // Error messages
+            if (isset($_GET["error"])) {
+                if ($_GET["error"] == "noneBelepes") {
+                    echo '<script type="text/javascript">removeHideClass("goodLogin");</script>';
+                }
+                else if ($_GET["error"] == "noneReg") {
+                    echo '<script type="text/javascript">removeHideClass("good");</script>';
+                }
+            }
+        ?>
+
         
-        <div class="row">
-            <div class="col">
-                <!-- SIGNUP -->
-                <?php include_once 'components/signup.php'; ?>
-            </div>
-            <div class="col">
-                <!-- LOGIN -->
-                <?php include_once 'components/login.php'; ?>
-            </div>
-        </div>
-        <a href="logout.php">Kilépés</a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1>Termékek listája:</h1>
+        
     </div>
+    <div class="spacer"></div>
 
-
-    <div class="container">
-        <div class="row">
-            <section>
-                <!-- LIST USERS -->
-                <?php include_once 'components/list-users.php'; ?>
-            </section>
-        </div>
-    </div>
+    <?php include_once 'components/footerNav.php'; ?>
 </body>
 </html>

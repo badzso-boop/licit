@@ -11,3 +11,38 @@
  	opacity: 0;
   }
 }
+
+@media screen and (min-width: 600px) {
+  .nav-footer {
+    display: none!important;
+  }
+}
+
+.icon {
+  font-size: 1.5rem!important;
+}
+
+.icon-text {
+  font-size: 0.8rem!important;
+}
+
+.feher {
+  color: white!important;
+  background-color: white !important;
+}
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 97%!important;
+  }
+}
+
+.footer {
+  position: fixed !important;
+  bottom: 0 !important;
+  width: 100% !important;
+}
+
+.spacer {
+  height: 8rem;
+}

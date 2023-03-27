@@ -1,4 +1,6 @@
-<section>
+<?php include_once 'header.php' ?>
+
+<section clasS="m-3">
     <h2>Belépés</h2>
     <div class="signup-form-form">
         <form action="includes/login.inc.php" method="post">

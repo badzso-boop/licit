@@ -49,7 +49,7 @@ function uidExists($conn, $username) {
   $sql = "SELECT * FROM users WHERE uname = ?;";
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../index.php?error=stmtfailed");
+	 	header("location: ../signup.php?error=stmtfailed");
 		exit();
 	}
 
@@ -74,7 +74,7 @@ function createUser($conn, $name, $email, $username, $bornDate, $pwd) {
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../index.php?error=stmtfailed");
+	 	header("location: ../signup.php?error=stmtfailed");
 		exit();
 	}
 
@@ -108,7 +108,7 @@ function loginUser($conn, $username, $pwd) {
 	$uidExists = uidExists($conn, $username);
 
 	if ($uidExists === false) {
-		header("location: ../index.php?error=rosszBelepesBelep");
+		header("location: ../login.php?error=rosszBelepesBelep");
 		exit();
 	}
 
@@ -116,13 +116,14 @@ function loginUser($conn, $username, $pwd) {
 	$checkPwd = password_verify($pwd, $pwdHashed);
 
 	if ($checkPwd === false) {
-		header("location: ../index.php?error=rosszBelepesBelep");
+		header("location: ../login.php?error=rosszBelepesBelep");
 		exit();
 	}
 	elseif ($checkPwd === true) {
 		session_start();
 		$_SESSION["uname"] = $uidExists["uname"];
 		$_SESSION["type"] = $uidExists["type"];
+
 		header("location: ../index.php?error=noneBelepes");
 		exit();
 	}

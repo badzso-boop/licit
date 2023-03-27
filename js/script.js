@@ -20,3 +20,16 @@ function userEdit(id) {
     console.log(id)
     window.location.href = 'components/user-edit.php?id='+id;
 }
+
+function show(id) {
+    switch (id) {
+        case "users":
+            document.getElementById(id).classList.remove('d-none')
+            document.getElementById("products").classList.add('d-none')
+            break;
+        case "products":
+            document.getElementById(id).classList.remove('d-none')
+            document.getElementById("users").classList.add('d-none')
+            break;
+    }
+}
