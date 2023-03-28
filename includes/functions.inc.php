@@ -149,8 +149,8 @@ function getSpecificUser($conn, $id) {
 }
 
 function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music) {
-	$sql = "UPDATE users SET uname=? WHERE id=?;";
-	//$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=? WHERE id=?;";
+	//$sql = "UPDATE users SET uname=? WHERE id=?;";
+	$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=? WHERE id=?;";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -158,8 +158,8 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 		exit();
 	}
 
-	//mysqli_stmt_bind_param($stmt, "sssssssssssssssi", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
-	mysqli_stmt_bind_param($stmt, "si", $uname, $id);
+	mysqli_stmt_bind_param($stmt, "sssssssssssssssi", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
+	//mysqli_stmt_bind_param($stmt, "si", $uname, $id);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
