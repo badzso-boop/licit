@@ -161,7 +161,7 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	header("location: ../index.php?error=noneEdit");
+	header("location: ../admin.php?error=noneEdit");
 	exit();
 }
 
