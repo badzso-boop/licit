@@ -149,9 +149,9 @@ function getSpecificUser($conn, $id) {
 }
 
 function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music) {
-	$sql = "UPDATE users SET uname=$uname WHERE id=?;";
+	$sql = "UPDATE users SET uname=? WHERE id=?;";
 	//$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=? WHERE id=?;";
-	
+
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
 	 	header("location: ../index.php?error=stmtfailed");
