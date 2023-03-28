@@ -157,7 +157,7 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "ssssssssssssssss", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
+	mysqli_stmt_bind_param($stmt, "sssssssssssssssi", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
