@@ -12,7 +12,7 @@
 
             if ($user->num_rows > 0) {
                 while($seged = $user->fetch_assoc()) {
-                    echo '<form action="../includes/edit-user.inc.php" method="POST">
+                    echo '<form action="../includes/edit-user.inc.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <!--ID-->
                                 <label for="exampleInputEmail1">ID</label>
