@@ -33,7 +33,7 @@ if (isset($_SESSION['type'])) {
                     </ul>
                     <div class="card-body">
                         <button class="btn btn-primary" onclick="userEdit('.$seged["id"].')" class="card-link">Szerkesztés</button>
-                        <a href="#" class="card-link">Another link</a>
+                        <button class="btn btn-primary" onclick="userDelete('.$seged["id"].')" class="card-link">Törlés</button>
                     </div>
                 </div>';
             }

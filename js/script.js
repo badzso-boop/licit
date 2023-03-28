@@ -21,6 +21,11 @@ function userEdit(id) {
     window.location.href = 'components/user-edit.php?id='+id;
 }
 
+function userDelete(id) {
+    console.log(id)
+    window.location.href = 'components/user-delete.php?id='+id;
+}
+
 function show(id) {
     switch (id) {
         case "users":

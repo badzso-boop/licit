@@ -165,4 +165,12 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 	exit();
 }
 
+function deleteUser($conn, $id) {
+	$sql = "DELETE FROM users WHERE id=".$id.";";
+	$result = $conn->query($sql);
+
+	header("location: ../admin.php?error=noneDelete");
+	exit();
+}
+
 #endregion
