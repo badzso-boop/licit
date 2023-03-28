@@ -26,6 +26,11 @@ function userDelete(id) {
     window.location.href = 'components/user-delete.php?id='+id;
 }
 
+function showAlert(szoveg, link) {
+    alert(szoveg);
+    window.location.href = link;
+}
+
 function show(id) {
     switch (id) {
         case "users":

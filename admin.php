@@ -16,6 +16,16 @@
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
             <div class="accordion-body">
+                <?php 
+                    if (isset($_GET["error"])) {
+                        if ($_GET["error"] == "noneDelete") {
+                            echo '<script type="text/javascript">showAlert("Sikeres felhasználó törlés!", "admin.php");</script>';
+                        }
+                        else if ($_GET["error"] == "noneEdit") {
+                            echo '<script type="text/javascript">showAlert("Sikeres felhasználó szerkesztés!", "admin.php");</script>';
+                        }
+                    }
+                ?>
                 <!-- LIST USERS -->
                 <?php include_once 'components/list-users.php'; ?>
             </div>
