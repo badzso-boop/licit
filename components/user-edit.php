@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <!--PROFILKÉP-->
                                 <label for="exampleInputEmail1">Profilkép</label>
-                                <input type="text" name="profileImg" class="form-control">
+                                <input type="file" name="profileImg" class="form-control">
                             </div>
                             <div class="form-group">
                                 <!--RÓLAM-->

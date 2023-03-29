@@ -6,7 +6,7 @@ if (isset($_POST["userEditSave"])) {
     $email = $_POST["email"];
     $bornDate = $_POST["borndate"];
     $type = $_POST["type"];
-    $profileImg = $_POST["profileImg"];
+    $profileImg = basename($_FILES["profileImg"]["name"]);;
     $about = $_POST["about"];
     $links = $_POST["links"];
     $badge = $_POST["badge"];
@@ -20,9 +20,13 @@ if (isset($_POST["userEditSave"])) {
     require_once "dbh.inc.php";
     require_once 'functions.inc.php';
 
-    if ($profileImg == "") {
+    if (isset($_FILES["profileImg"])) {
+        $profileImg = uploadImage($_FILES["profileImg"], $id, $name);
+    }
+    else {
         $profileImg = "blank-user.png";
     }
+
 
     updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music);
 }

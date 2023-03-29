@@ -33,7 +33,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-center" href="#">
+                            <a class="nav-link text-center" onclick="profile('.$_SESSION["id"].')" href="#">
                                 <i class="bi bi-person icon"></i>
                                 <p class="icon-text">Fiókom</p>
                             </a>
@@ -52,7 +52,7 @@
             if (isset($_SESSION["type"])) {
                 if ($_SESSION["type"] == "admin") {
                     echo '  <li class="nav-item">
-                                <a class="nav-link text-center" href="admin.php">
+                                <a class="nav-link text-center" href="admin/admin.php">
                                     <i class="bi bi-cpu icon"></i>
                                     <p class="icon-text">Admin</p>
                                 </a>

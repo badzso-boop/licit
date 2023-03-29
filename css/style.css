@@ -16,10 +16,36 @@
   .nav-footer {
     display: none!important;
   }
+
+  .kep {
+    width: 10rem !important;
+    height: 10rem !important;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid black;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .nav-header {
+    display: none!important;
+  }
+
+  .kep-telo {
+    width: 6rem !important;
+    height: 6rem !important;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid black;
+  }
 }
 
 .icon {
   font-size: 1.5rem!important;
+}
+
+.iconHeader {
+  font-size: 2rem!important;
 }
 
 .icon-text {

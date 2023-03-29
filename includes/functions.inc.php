@@ -121,6 +121,7 @@ function loginUser($conn, $username, $pwd) {
 	}
 	elseif ($checkPwd === true) {
 		session_start();
+		$_SESSION["id"] = $uidExists["id"];
 		$_SESSION["uname"] = $uidExists["uname"];
 		$_SESSION["type"] = $uidExists["type"];
 
@@ -161,7 +162,7 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	header("location: ../admin.php?error=noneEdit");
+	header("location: ../admin/adminUsers.php?error=noneEdit");
 	exit();
 }
 
@@ -169,8 +170,58 @@ function deleteUser($conn, $id) {
 	$sql = "DELETE FROM users WHERE id=".$id.";";
 	$result = $conn->query($sql);
 
-	header("location: ../admin.php?error=noneDelete");
+	header("location: ../admin/adminUsers.php?error=noneDelete");
 	exit();
+}
+
+function uploadImage($file, $id, $name) {
+	$target_dir = "../img/";
+	$customName = $id . '_' . $name . '_'. round(microtime(true) * 1000) .'_'. basename($file["name"]);
+    $target_file = $target_dir . $customName;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    // Check if image file is a actual image or fake image
+    $check = getimagesize($file["tmp_name"]);
+    if($check !== false) {
+        echo "File is an image - " . $check["mime"] . ".";
+        $uploadOk = 1;
+    } else {
+        echo "File is not an image.";
+        $uploadOk = 0;
+    }
+
+    // Check if file already exists
+    if (file_exists($target_file)) {
+        echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+
+    // Check file size
+    if ($file["size"] > 5000000000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
+
+    // Allow certain file formats
+    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        $uploadOk = 0;
+    }
+
+    // Check if $uploadOk is set to 0 by an error
+    if ($uploadOk == 0) {
+        echo "Sorry, your file was not uploaded.";
+    // if everything is ok, try to upload file
+    } else {
+        if (move_uploaded_file($file["tmp_name"], $target_file)) {
+            echo "The file ". htmlspecialchars( basename( $file["name"])). " has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your file.";
+        }
+    }
+
+	return $customName;
 }
 
 #endregion

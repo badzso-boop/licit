@@ -6,6 +6,7 @@
 <html lang="hu">
     <?php include_once 'components/header.php' ?>
 <body>
+    <?php include_once 'components/headerNav.php' ?>
 
     <div class="container">
         <?php 
