@@ -1,3 +1,9 @@
+<?php 
+if( empty(session_id()) && !headers_sent()){
+  session_start();
+}
+?>
+
 <link rel="stylesheet" href="../css/style.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
@@ -22,14 +28,14 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="signup.php">Regisztárció</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="logout.php">Kilépés</a>
                     </li>';
               }
               else {
                 echo ' <li class="nav-item">
                         <a class="nav-link" onclick="profile('.$_SESSION["id"].')" href="#">Fiókom</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Kilépés</a>
                       </li>';
               }
 

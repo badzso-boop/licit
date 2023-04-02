@@ -33,7 +33,7 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item m-3">Név: <br>'.$seged["name"].'</li>
                                     <li class="list-group-item m-3">Email: <br><a href="mailto:'.$seged["email"].'">'.$seged["email"].'</a></li>
-                                    <li class="list-group-item m-3">Cím: <br>'.$seged['addr'].'</li>
+                                    <li class="list-group-item m-3">Cím: <br>'.$seged['zip'].' - '.$seged['city'].' - '.$seged['addr'].'</li>
                                     <li class="list-group-item m-3">Telefon: <br><a href="tel:'.$seged['phone'].'">'.$seged['phone'].'</a></li>
                                     <li class="list-group-item m-3">Születési dátum: <br>'.$seged["bornDate"].'</li>
                                 </ul>
@@ -79,6 +79,15 @@
                             </div>
                             <div class="col">
                                 <p class="m-4">'.$seged["about"].'</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-primary" onclick="userEdit('.$seged["id"].')">Szerkesztés</button>
+                                <button class="btn btn-danger" onclick="userDelete('.$seged["id"].')">Fiók törlése</button>
+                            </div>
+                            <div class="col">
+                                
                             </div>
                         </div>
                     </div>';

@@ -35,3 +35,26 @@ function showAlert(szoveg, link) {
     alert(szoveg);
     window.location.href = link;
 }
+
+async function addInputs(linkek,name, placeholder) {
+    let links = await document.getElementById(name)
+    let t = linkek.split(",")
+    
+    for (let i = 0; i < 5; i++) {
+        let input = document.createElement("input");
+        
+        input.type = "text"
+        input.name = name + i
+        input.classList.add("form-control")
+        input.classList.add("my-2")
+        input.placeholder = placeholder
+        if (t[i] == undefined) {
+            input.value = ""
+        }
+        else {
+            input.value = t[i]
+        }
+
+        links.appendChild(input)
+    }
+}

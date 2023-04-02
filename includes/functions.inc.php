@@ -149,8 +149,21 @@ function getSpecificUser($conn, $id) {
 	return $result;
 }
 
-function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music) {
-	$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=? WHERE id=?;";
+function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $security, $zip, $city, $addr, $phone) {
+	$user = getSpecificUser($conn, $id);
+	if ($user->num_rows > 0) {
+		while($seged = $user->fetch_assoc()) {
+			if ($seged["profileImg"] != "blank-user.png" && $profileImg == "blank-user.png") {
+				$profileImg = $seged["profileImg"];
+			}
+			else if($seged["profileImg"] != "blank-user.png"){
+				unlink('../img/'.$seged["profileImg"]);
+			}
+		}
+	}
+
+
+	$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=?, addr=?, phone=?, zip=?, city=? WHERE id=?;";
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -158,12 +171,22 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 		exit();
 	}
 
-	mysqli_stmt_bind_param($stmt, "ssssssssssissssi", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $id);
+	if ($type == "") {
+		$type = "user";
+	}
+
+	mysqli_stmt_bind_param($stmt, "ssssssssssissssssisi", $uname, $name, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $addr, $phone, $zip, $city, $id);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
-	header("location: ../admin/adminUsers.php?error=noneEdit");
-	exit();
+	if ($security) {
+		header("location: ../admin/adminUsers.php?error=noneEdit");
+		exit();
+	}
+	else {
+		header("location: ../profile.php?error=noneEdit&id=".$id);
+		exit();
+	}
 }
 
 function deleteUser($conn, $id) {
