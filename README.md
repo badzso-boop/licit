@@ -16,6 +16,7 @@
 4. Admin termék feltöltés
 5. User termék megjelenítés
 6. navbar kesobb visszaallitasa a fejlesztoi kornyezetrol
+7. Felhasználó törlésnél kérdezze meg, hogy az adott felhasználóhoz tartozó adatok melyik felhasznalora szaljanak ra
 
 # FELADATOK
 - regisztráció
@@ -71,7 +72,7 @@
 - products
     - id            INT
     - uid           INT -> foreign key -> users.id
-    - title          VARCHAR
+    - title         VARCHAR
     - description   VARCHAR
     - images        VARCHAR -> , separator
     - postDate      DATE
@@ -110,6 +111,10 @@
     badge VARCHAR(512),
     coupon VARCHAR(255),
     level INT,
+    addr VARCHAR(255),
+    phone VARCHAR(15),
+    zip INT,
+    city VARCHAR(255),
     hobby VARCHAR(256),
     work VARCHAR(256),
     sport VARCHAR(256),
@@ -127,5 +132,14 @@
     priceMin INT,
     pPrice VARCHAR(512),
     steppingPrice INT,
+    pPrice VARCHAR(512),
     FOREIGN KEY(uid) REFERENCES users(id)
+);
+- CREATE TABLE usersLog(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    userId INT,
+    uname VARCHAR(255)
+    date DATE,
+    workType VARCHAR(255),
+    workerUser VARCHAR(255),
 );

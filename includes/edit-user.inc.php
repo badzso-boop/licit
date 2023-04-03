@@ -1,5 +1,6 @@
 <?php 
 if (isset($_POST["userEditSave"])) {
+    //ADMIN
     $id = $_POST["id"];
     $name = $_POST["name"];
     $uname = $_POST["uname"];
@@ -86,6 +87,7 @@ if (isset($_POST["userEditSave"])) {
 
     $security = true;
 
+    //usersLog($conn, $id, date('m/d/Y h:i:s a', time()), "AdminUpdateUser", $_SESSION["uname"]);
 
     updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $security, $zip, $city, $addr, $phone);
 }
@@ -94,6 +96,7 @@ else if (isset($_POST["userEditBack"])) {
     exit();
 }
 else if (isset($_POST["userEditSaveUser"])) {
+    //USER
     $id = $_POST["id"];
     $name = $_POST["name"];
     $uname = $_POST["uname"];
@@ -182,6 +185,8 @@ else if (isset($_POST["userEditSaveUser"])) {
     }
 
     $security = false;
+
+    //usersLog($conn, $id, date('m/d/Y h:i:s a', time()), "UserUpdateUser", $_SESSION["uname"]);
 
     updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profileImg, $about, $links, $badge, $coupon, $level, $hobby, $work, $sport, $music, $security, $zip, $city, $addr, $phone);
 }

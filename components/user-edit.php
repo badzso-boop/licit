@@ -89,17 +89,17 @@
                                             <!--ZIP-->
                                             <label for="exampleInputEmail1">Irányítószám</label>
                                             <input type="number" name="zip" class="form-control" value="'.$seged["zip"].'">
-                                        </div>
-                                        <div class="form-group">
-                                            <!--CITY-->
-                                            <label for="exampleInputEmail1">Város</label>
-                                            <input type="text" name="city" class="form-control" value="'.$seged["city"].'">
-                                        </div>
-                                        <div class="form-group">
-                                            <!--ADDR-->
-                                            <label for="exampleInputEmail1">Cím</label>
-                                            <input type="text" name="addr" class="form-control" value="'.$seged["addr"].'" placeholder="Utca házszám emelet ajtó">
-                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <!--CITY-->
+                                        <label for="exampleInputEmail1">Város</label>
+                                        <input type="text" name="city" class="form-control" value="'.$seged["city"].'">
+                                    </div>
+                                    <div class="form-group">
+                                        <!--ADDR-->
+                                        <label for="exampleInputEmail1">Cím</label>
+                                        <input type="text" name="addr" class="form-control" value="'.$seged["addr"].'" placeholder="Utca házszám emelet ajtó">
+                                    </div>
                                     <div class="form-group">
                                         <!--SZINT-->
                                         <label for="exampleInputEmail1">Szint</label>

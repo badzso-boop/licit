@@ -9,8 +9,8 @@
     <?php include_once '../components/adminNav.php' ?>
 
     <div id="products">
-        <h1>Termékek listája</h1>
-        <?php include_once '../components/list-products.php' ?>
+        <h1>Termék feltöltése</h1>
+        
     </div>
 </body>
 </html>

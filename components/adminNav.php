@@ -22,6 +22,9 @@
             <a class="nav-link" href="adminProducts.php">Termékek</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="adminProductUpload.php">Termék feltöltése</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="../logout.php">Kilépés</a>
           </li>
     </div>

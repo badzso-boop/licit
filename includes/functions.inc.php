@@ -1,4 +1,7 @@
 <?php
+if( empty(session_id()) && !headers_sent()){
+	session_start();
+}
 /*--------------------Regisztráció---------------------*/
 #region
 function emptyInputSignup($name, $email, $username, $pwd, $pwdRepeat) {
@@ -70,11 +73,13 @@ function uidExists($conn, $username) {
 }
 
 function createUser($conn, $name, $email, $username, $bornDate, $pwd) {
-  $sql = "INSERT INTO users (uname, name, email, bornDate, type, pwd, profileImg) VALUES (?, ?, ?, ?, ?, ?, ?);";
+  	$sql = "INSERT INTO users (uname, name, email, bornDate, type, pwd, profileImg) VALUES (?, ?, ?, ?, ?, ?, ?);";
+
+  	usersLog($conn, "-1", date('m/d/Y h:i:s a', time()), "RegisterUser", $username, $username);
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
-	 	header("location: ../signup.php?error=stmtfailed");
+		header("location: ../signup.php?error=stmtfailed");
 		exit();
 	}
 
@@ -125,6 +130,8 @@ function loginUser($conn, $username, $pwd) {
 		$_SESSION["uname"] = $uidExists["uname"];
 		$_SESSION["type"] = $uidExists["type"];
 
+		usersLog($conn, $_SESSION["id"], date('m/d/Y h:i:s a', time()), $_SESSION["type"]."LoginUser", $_SESSION["uname"], $_SESSION["id"]);
+
 		header("location: ../index.php?error=noneBelepes");
 		exit();
 	}
@@ -162,8 +169,9 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 		}
 	}
 
-
 	$sql = "UPDATE users SET uname=?, name=?, email=?,bornDate=?,type=?,profileImg=?,about=?,links=?,badge=?,coupon=?,level=?,hobby=?,work=?,sport=?,music=?, addr=?, phone=?, zip=?, city=? WHERE id=?;";
+
+	usersLog($conn, $_SESSION["id"], date('m/d/Y h:i:s a', time()), $_SESSION["type"]."UpdateUser", $_SESSION["uname"], $uname);
 
 	$stmt = mysqli_stmt_init($conn);
 	if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -179,6 +187,7 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	mysqli_close($conn);
+
 	if ($security) {
 		header("location: ../admin/adminUsers.php?error=noneEdit");
 		exit();
@@ -192,6 +201,8 @@ function updateUser($conn, $id, $name, $uname, $email, $bornDate, $type, $profil
 function deleteUser($conn, $id) {
 	$sql = "DELETE FROM users WHERE id=".$id.";";
 	$result = $conn->query($sql);
+
+	usersLog($conn, $_SESSION["id"], date('m/d/Y h:i:s a', time()), $_SESSION["type"]."DeleteUser", $_SESSION["uname"], $id);
 
 	header("location: ../admin/adminUsers.php?error=noneDelete");
 	exit();
@@ -245,6 +256,62 @@ function uploadImage($file, $id, $name) {
     }
 
 	return $customName;
+}
+
+#endregion
+
+
+/*----------------------LOGS----------------*/
+#region
+
+function usersLog($conn, $userId, $date, $workType, $uname, $workerType) {
+
+	echo $userId . " " . $date . " " . $workType . " " . $uname;
+
+	$sql = 'INSERT INTO userslog (userId, uname, date, workType, workerUser) VALUES (?, ?, ?, ?, ?);';
+
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+	 	header("location: ../index.php?error=stmtfailed");
+		exit();
+	}
+
+	mysqli_stmt_bind_param($stmt, "issss", $userId, $uname, $date, $workType, $workerType);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+}
+
+function getLogs($conn) {
+    $sql = "SELECT * FROM userslog ORDER BY date DESC LIMIT 5";
+	$result = $conn->query($sql);
+
+	return $result;
+}
+
+function getSpecificLog($conn, $id) {
+	$sql = "SELECT * FROM userslog WHERE id=".$id.";";
+	$result = $conn->query($sql);
+
+	return $result;
+}
+
+#endregion
+
+/*----------------------PRODUCTS----------------*/
+
+#region
+function getProducts($conn) {
+    $sql = "SELECT * FROM products";
+	$result = $conn->query($sql);
+
+	return $result;
+}
+
+function getSpecificProduct($conn, $id) {
+	$sql = "SELECT * FROM products WHERE id=".$id.";";
+	$result = $conn->query($sql);
+
+	return $result;
 }
 
 #endregion
