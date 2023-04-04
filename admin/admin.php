@@ -12,19 +12,19 @@
         <!-- LIST USER LOGS -->
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col col-lg-4 col-12">
                     <h1 class="text-center">Felhasználók logjai</h1>
                     <div class="list-group">
                         <?php include_once '../components/list-logs.php'; ?>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col col-lg-4 col-12">
                     <h1 class="text-center">Termékek logjai</h1>
                     <div class="list-group">
 
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col col-lg-4 col-12">
                     <h1 class="text-center">Licitek logjai</h1>
                     <div class="list-group">
                         

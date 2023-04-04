@@ -18,7 +18,7 @@
 
         if ($user->num_rows > 0) {
             while($seged = $user->fetch_assoc()) {
-                echo '<div class="container mt-4">
+                echo '<div class="container my-4">
                         <div class="row">
                             <div class="col-4">
                                 <img src="../img/'.$seged['profileImg'].'" class="card-img-top kep kep-telo d-block mx-auto mt-4" alt="'.$seged['name'].'">
@@ -42,6 +42,7 @@
                         <hr class="border border-primary border-3 opacity-75">
                         <div class="row">
                             <div class="col">
+                            <h3 clasS="text-center">Linkek</h3>
                             <ul class="list-group list-group-flush mt-4">';
                                 $linkek = explode(",", $seged["links"]);
                                 for($i=0;$i<count($linkek);$i++){
@@ -78,6 +79,7 @@
                                 </div>
                             </div>
                             <div class="col">
+                                <h3 clasS="text-center">Rólam</h3>
                                 <p class="m-4">'.$seged["about"].'</p>
                             </div>
                         </div>
@@ -90,9 +92,11 @@
                                 
                             </div>
                         </div>
-                    </div>';
+                    </div>
+                    <div class="spacer"></div>';
             }
         }
+        include_once 'components/footerNav.php';
     ?>
 </body>
 </html>

@@ -314,4 +314,15 @@ function getSpecificProduct($conn, $id) {
 	return $result;
 }
 
+function emptyInputProducts($title, $description, $price, $priceMin, $steppingPrice) {
+	$result;
+	if (empty($title) || empty($description) || empty($price) || empty($priceMin) || empty($steppingPrice)) {
+		$result = true;
+	}
+	else {
+		$result = false;
+	}
+	return $result;
+}
+
 #endregion
