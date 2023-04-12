@@ -24,6 +24,13 @@
     border-radius: 50%;
     border: 2px solid black;
   }
+  .kep-rounded {
+    width: 10rem !important;
+    height: 10rem !important;
+    object-fit: cover;
+    border-radius: 15%;
+    border: 2px solid black;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -36,6 +43,16 @@
     height: 6rem !important;
     object-fit: cover;
     border-radius: 50%;
+    border: 2px solid black;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .kep-telo-rounded {
+    width: 6rem !important;
+    height: 6rem !important;
+    object-fit: cover;
+    border-radius: 15%;
     border: 2px solid black;
   }
 }
@@ -71,4 +88,8 @@
 
 .spacer {
   height: 8rem;
+}
+
+.hide {
+  display: none;
 }

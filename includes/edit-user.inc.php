@@ -7,7 +7,7 @@ if (isset($_POST["userEditSave"])) {
     $email = $_POST["email"];
     $bornDate = $_POST["borndate"];
     $type = $_POST["type"];
-    $profileImg = basename($_FILES["profileImg"]["name"]);;
+    $profileImg = basename($_FILES["profileImg"]["name"]);
     $about = $_POST["about"];
     
     $tmp = "";

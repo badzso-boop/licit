@@ -325,4 +325,97 @@ function emptyInputProducts($title, $description, $price, $priceMin, $steppingPr
 	return $result;
 }
 
+function uploadProductImages($title, $fajl) {
+	$countfiles = count($fajl["full_path"]);
+
+    $totalFileUploaded = "";
+    for($i=0;$i<$countfiles;$i++){
+		// echo $fajl['name'][$i] . "<br>";
+		$filename = $_SESSION["id"] . '_'. $_SESSION["uname"] . '_'. $title . '_'. round(microtime(true) * 1000) .'_'. $fajl['name'][$i];
+
+		## Location
+		$location = "../img/".$filename;
+		$extension = pathinfo($location,PATHINFO_EXTENSION);
+		$extension = strtolower($extension);
+
+		## File upload allowed extensions
+		$valid_extensions = array("jpg","jpeg","png");
+
+		$response = 0;
+		## Check file extension
+		if(in_array(strtolower($extension), $valid_extensions)) {
+			## Upload file
+			if(move_uploaded_file($fajl['tmp_name'][$i],$location)){
+
+				if ($i == $countfiles-1) {
+					$totalFileUploaded .= $filename;	
+				}
+				else {
+					$totalFileUploaded .= $filename . ";";
+				}
+			}
+		}
+    }
+    return $totalFileUploaded;
+}
+
+function uploadProduct($conn, $uid, $title, $description, $productImages, $postDate, $owner, $price, $priceMin, $steppingPrice) {
+	$sql = "INSERT INTO products (uid, title, description, images, postDate, owner, price, priceMin, steppingPrice, pPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+	$stmt = mysqli_stmt_init($conn);
+	if (!mysqli_stmt_prepare($stmt, $sql)) {
+		header("location: ../signup.php?error=stmtfailed");
+		exit();
+	}
+
+	$pPrice = "-";
+
+	mysqli_stmt_bind_param($stmt, "isssssiiis", $uid, $title, $description, $productImages, $postDate, $owner, $price, $priceMin, $steppingPrice, $pPrice);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	mysqli_close($conn);
+	header("location: ../admin/adminProducts.php?error=noneProducts");
+	exit();
+}
+
+function bidProduct($mysqli, $conn, $uid, $pid, $amount, $time, $type, $price, $semicolumn) {
+	$sql = "";
+	if ($type == "up" && $semicolumn == 0) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = '".($price + $amount)."?' WHERE id = ".$pid."; UPDATE products SET price = ".($price + $amount)." WHERE id = ".$pid.";";
+	}
+
+	if ($type == "up" && $semicolumn == 1) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = CONCAT(pPrice,'".($price + $amount)."') WHERE id = ".$pid."; UPDATE products SET price = ".($price + $amount)." WHERE id = ".$pid.";";
+	}
+	
+	if ($type == "up" && $semicolumn == 2) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = CONCAT(pPrice,'?".($price + $amount)."') WHERE id = ".$pid."; UPDATE products SET price = ".($price + $amount)." WHERE id = ".$pid.";";
+	}
+
+	if ($type == "down" && $semicolumn == 0) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = '".($price - $amount)."?' WHERE id = ".$pid."; UPDATE products SET price = ".($price - $amount)." WHERE id = ".$pid.";";
+	}
+
+	if ($type == "down" && $semicolumn == 1) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = CONCAT(pPrice,'".($price - $amount)."') WHERE id = ".$pid."; UPDATE products SET price = ".($price - $amount)." WHERE id = ".$pid.";";
+	}
+	
+	if ($type == "down" && $semicolumn == 2) {
+		$sql = "INSERT INTO bid_table (uid, pid, bidAmount, timeStamp, type) VALUES (".$uid.", ".$pid.", ".$amount.", '".$time."', 'up'); UPDATE products SET pPrice = CONCAT(pPrice,'?".($price - $amount)."') WHERE id = ".$pid."; UPDATE products SET price = ".($price - $amount)." WHERE id = ".$pid.";";
+	}
+
+	echo $sql;
+	$mysqli->multi_query($sql);
+
+	do {
+		if ($result = $mysqli->store_result()) {
+			var_dump($result->fetch_all(MYSQLI_ASSOC));
+			$result->free();
+		}
+	} while ($mysqli->next_result());
+	
+	header("location: ../components/product.php?id=".$pid."&error=noneBid");
+	exit();
+}
+
 #endregion

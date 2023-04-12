@@ -10,7 +10,7 @@
 
 <section>
     <div class="container">
-        <form action="../includes/productUpload.inc.php" method="post">
+        <form action="../includes/productUpload.inc.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <!--Cím-->
                 <label for="exampleInputEmail1">Termék megnevezése</label>
@@ -19,7 +19,7 @@
             <div class="form-group">
                 <!--Termékkép-->
                 <label for="exampleInputEmail1">Termékkép</label>
-                <input type="file" name="productImage" class="form-control">
+                <input type="file" name="productImage[]" class="form-control" multiple>
             </div>
             <div class="form-group">
                 <!--LEÍRÁS-->

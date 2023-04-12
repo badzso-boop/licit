@@ -52,6 +52,10 @@
 6. virtual wallet
 7. hirdetesek -> https://adsense.google.com/intl/hu_hu/start/?utm_campaign=Googledevproductsadsense
 
+# CARTS logika
+- Az eredeti arnak a duplaja a 100% majd utana százalékba irjuk ki a liciteket az arral
+- kepernyo merettol fuggoen csak x darab arat jelenit meg a multbol es irja ki melle mennyi volt, hogy lehessen követni!
+
 # ADATBÁZIS TERV
 (MINDEN ANGOL AZ EGYSÉG KEDVÉÉRT)
 - users
@@ -142,4 +146,14 @@
     date DATE,
     workType VARCHAR(255),
     workerUser VARCHAR(255),
+);
+- CREATE TABLE bid_table(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid INT,
+    pid INT,
+    bidAmount INT,
+    timeStamp VARCHAR(255),
+    type VARCHAR(25),
+    FOREIGN KEY (uid) REFERENCES users(id),
+    FOREIGN KEY (pid) REFERENCES products(id),
 );

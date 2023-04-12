@@ -6,19 +6,24 @@
     if (isset($_POST["productUpload"])) {
         $title = $_POST["title"];
         $description = $_POST["description"];
-        $productImg = $_POST["productImage"];
-        $postDate = date('m/d/Y h:i:s a', time());
+        $postDate = date('Y/m/d h:i:s a', time());
         $owner = $_SESSION["uname"];
         $price = $_POST["price"];
         $priceMin = $_POST["priceMin"];
         $steppingPrice = $_POST["steppingPrice"];
 
-        // //Üres bemenetek
-        // if (emptyInputProducts($title, $description, $price, $priceMin, $steppingPrice) !== false) {
-        //     header("location: ../adminProductUpload.php?error=uresBemenet");
-        //     exit();
-        // }
+        include_once 'functions.inc.php';
+        include_once 'dbh.inc.php';
 
-        echo $title . " - " . $description . " - " .$productImg . " - " .$postDate . " - " .$owner . " - " .$price . " - " .$priceMin . " - " .$steppingPrice;
+        //Üres bemenetek
+        if (emptyInputProducts($title, $description, $price, $priceMin, $steppingPrice) !== false) {
+            header("location: ../adminProductUpload.php?error=uresBemenet");
+            exit();
+        }
+
+        $productImages = uploadProductImages($title, $_FILES["productImage"]);
+
+        //echo $title . " - " . $description . " - " .$productImages . " - " .$postDate . " - " .$owner . " - " .$price . " - " .$priceMin . " - " .$steppingPrice;
+        uploadProduct($conn, $_SESSION["id"], $title, $description, $productImages, $postDate, $owner, $price, $priceMin, $steppingPrice);
     }
 ?>
