@@ -326,7 +326,7 @@ function emptyInputProducts($title, $description, $price, $priceMin, $steppingPr
 }
 
 function uploadProductImages($title, $fajl) {
-	$countfiles = count($fajl["full_path"]);
+	$countfiles = count($fajl["name"]);
 
     $totalFileUploaded = "";
     for($i=0;$i<$countfiles;$i++){
