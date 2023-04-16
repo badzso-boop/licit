@@ -2,6 +2,10 @@
 require_once '../includes/dbh.inc.php';
 require_once '../includes/functions.inc.php';
 
+if( empty(session_id()) && !headers_sent()){
+    session_start();
+}
+
 $products = getProducts($conn);
 
 if (isset($_SESSION['type'])) {
@@ -25,10 +29,19 @@ if (isset($_SESSION['type'])) {
                                 <p class="list-group-item">'.$datum[0].'</p>
                             </div>
                             <br>
-                            <div class="text-center">
-                                <a href="../components/product.php?id='.$seged["id"].'" class="btn btn-primary m-auto">Bővebben</a>
-                                <a href="components/product-delete.php?id='.$seged["id"].'" class="btn btn-danger m-auto">Törlés</a>
-                            </div>
+                            <div class="text-center">';
+                                if (isset($_SESSION["uname"])) {
+                                    if ($_SESSION["uname"] == $seged["owner"]) {
+                                        echo '<a href="../components/product-edit.php?id='.$seged["id"].'" class="btn btn-success m-auto mx-1">Szerkesztés</a>';
+                                        echo '<a href="../components/product-delete.php?id='.$seged["id"].'" class="btn btn-danger m-auto mx-1">Törlés</a>';
+                                    }
+                                    else if ($_SESSION["type"] == "admin") {
+                                        echo '<a href="../components/product-edit.php?id='.$seged["id"].'" class="btn btn-success m-auto mx-1">Szerkesztés</a>';
+                                        echo '<a href="../components/product-delete.php?id='.$seged["id"].'" class="btn btn-danger m-auto mx-1">Törlés</a>';
+                                    }
+                                }
+                                echo' <a href="../components/product.php?id='.$seged["id"].'" class="btn btn-primary m-auto my-1">Bővebben</a>';
+                            echo '</div>
                         </div>
                     </div>';
             }

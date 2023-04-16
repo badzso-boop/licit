@@ -307,6 +307,13 @@ function getProducts($conn) {
 	return $result;
 }
 
+function getBids($conn) {
+    $sql = "SELECT users.name, products.owner, bid_table.id, bid_table.uid, bid_table.bidAmount, bid_table.timeStamp, bid_table.type FROM bid_table INNER JOIN products ON products.id = bid_table.pid INNER JOIN users ON bid_table.uid = users.id ORDER BY bid_table.timeStamp DESC LIMIT 5";
+	$result = $conn->query($sql);
+
+	return $result;
+}
+
 function getSpecificProduct($conn, $id) {
 	$sql = "SELECT * FROM products WHERE id=".$id.";";
 	$result = $conn->query($sql);
@@ -416,6 +423,64 @@ function bidProduct($mysqli, $conn, $uid, $pid, $amount, $time, $type, $price, $
 	
 	header("location: ../components/product.php?id=".$pid."&error=noneBid");
 	exit();
+}
+
+function deleteProduct($mysqli, $id) {
+	$sql = "DELETE FROM bid_table WHERE pid=".$id.";DELETE FROM products WHERE id=".$id.";";
+
+	$mysqli->multi_query($sql);
+
+	do {
+		if ($result = $mysqli->store_result()) {
+			var_dump($result->fetch_all(MYSQLI_ASSOC));
+			$result->free();
+		}
+	} while ($mysqli->next_result());
+	
+	header("location: ../admin/adminProducts.php?error=noneBid");
+	exit();
+}
+
+function updateProduct($conn, $title, $description, $owner, $price, $priceMin, $steppingPrice, $id, $type) {
+	$sql = "";
+	if ($owner == "-") {
+		$sql = "UPDATE  products SET title=?, description=?, price=?, priceMin=?, steppingPrice=? WHERE id=?;";	
+
+		$stmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			header("location: ../index.php?error=stmtfailed");
+			exit();
+		}
+
+		mysqli_stmt_bind_param($stmt, "ssiiii", $title, $description, $price, $priceMin, $steppingPrice, $id);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		mysqli_close($conn);
+	}
+	else {
+		$sql = "UPDATE  products SET title=?, description=?, owner=?, price=?, priceMin=?, steppingPrice=? WHERE id=?;";
+
+		$stmt = mysqli_stmt_init($conn);
+		if (!mysqli_stmt_prepare($stmt, $sql)) {
+			header("location: ../index.php?error=stmtfailed");
+			exit();
+		}
+
+		mysqli_stmt_bind_param($stmt, "sssiiii", $title, $description, $owner, $price, $priceMin, $steppingPrice, $id);
+		mysqli_stmt_execute($stmt);
+		mysqli_stmt_close($stmt);
+		mysqli_close($conn);
+	}
+
+	
+	if ($type == "admin") {
+		header("location: ../admin/adminProducts.php?error=noneProducts");
+		exit();	
+	}
+	else {
+		header("location: ../products.php?error=noneProducts");
+		exit();
+	}
 }
 
 #endregion

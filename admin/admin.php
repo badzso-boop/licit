@@ -19,9 +19,9 @@
                     </div>
                 </div>
                 <div class="col col-lg-4 col-12">
-                    <h1 class="text-center">Termékek logjai</h1>
+                    <h1 class="text-center">Licitek logjai</h1>
                     <div class="list-group">
-
+                        <?php include_once '../components/list-bids.php'; ?>
                     </div>
                 </div>
                 <div class="col col-lg-4 col-12">

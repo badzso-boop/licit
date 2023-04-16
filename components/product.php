@@ -66,16 +66,25 @@ if (isset($_SESSION['type'])) {
                         <div class="col-12 border rounded mt-2">
                             <p>'.$seged["description"].'</p>
                             <div id="form" class="text-center my-4">
-                                    <form action="../includes/licit.inc.php" method="post" class="mx-2 d-inline-block">
-                                        <input type="number" name="id" value="'.$seged["id"].'" class="hide">
-                                        <button type="submit" class="btn btn-success" name="licitUp">Licit fel</button>
-                                    </form>
-                                
-                                    <form action="../includes/licit.inc.php" method="post" class="mx-2 d-inline-block">
-                                        <input type="number" name="id" value="'.$seged["id"].'" class="hide">
-                                        <button type="submit" class="btn btn-danger" name="licitDown">Licit le</button>
-                                    </form>
-                                </div>
+                                <form action="../includes/licit.inc.php" method="post" class="mx-2 d-inline-block">
+                                    <input type="number" name="id" value="'.$seged["id"].'" class="hide">
+                                    <button type="submit" class="btn btn-success" name="licitUp">Licit fel</button>
+                                </form>
+                            
+                                <form action="../includes/licit.inc.php" method="post" class="mx-2 d-inline-block">
+                                    <input type="number" name="id" value="'.$seged["id"].'" class="hide">
+                                    <button type="submit" class="btn btn-danger" name="licitDown">Licit le</button>
+                                </form>';
+                                if (isset($_SESSION["type"])) {
+                                    if ($_SESSION["type"] == "admin") {
+                                        echo '<div>
+                                                <a href="product-delete.php?id='.$seged["id"].'">
+                                                    <button type="button" class="btn btn-danger">Törlés</button>
+                                                </a>
+                                            </div>';
+                                    }
+                                }
+                            echo '</div>
                         </div>';
                         $tomb = explode("?", $seged["pPrice"]);
                         $tomb = array_filter($tomb);
