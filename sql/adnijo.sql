@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Ápr 03. 22:59
+-- Létrehozás ideje: 2023. Ápr 24. 19:48
 -- Kiszolgáló verziója: 10.4.24-MariaDB
 -- PHP verzió: 8.1.6
 
@@ -24,6 +24,38 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tábla szerkezet ehhez a táblához `bid_table`
+--
+
+CREATE TABLE `bid_table` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) DEFAULT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `bidAmount` int(11) DEFAULT NULL,
+  `timeStamp` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `type` varchar(25) COLLATE utf8_hungarian_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `bid_table`
+--
+
+INSERT INTO `bid_table` (`id`, `uid`, `pid`, `bidAmount`, `timeStamp`, `type`) VALUES
+(1, 1, 3, 1000, '04/12/2023 09:01:09 pm', 'up'),
+(42, 1, 3, 1000, '04/12/2023 11:17:00 pm', 'up'),
+(43, 1, 3, 1000, '04/12/2023 11:17:02 pm', 'up'),
+(44, 1, 3, 1000, '04/12/2023 11:17:05 pm', 'up'),
+(45, 1, 3, 1000, '04/12/2023 11:17:06 pm', 'up'),
+(46, 1, 3, 1000, '04/12/2023 11:17:06 pm', 'up'),
+(47, 1, 3, 1000, '04/12/2023 11:17:07 pm', 'up'),
+(48, 1, 3, 1000, '04/12/2023 11:17:08 pm', 'up'),
+(88, 1, 3, 1000, '04/16/2023 10:20:05 pm', 'up'),
+(89, 1, 3, 1000, '04/16/2023 10:20:06 pm', 'up'),
+(90, 1, 3, 1000, '04/16/2023 10:20:07 pm', 'up');
+
+-- --------------------------------------------------------
+
+--
 -- Tábla szerkezet ehhez a táblához `products`
 --
 
@@ -33,13 +65,20 @@ CREATE TABLE `products` (
   `title` varchar(256) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `description` varchar(512) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `images` varchar(512) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `postDate` date DEFAULT NULL,
+  `postDate` varchar(255) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `owner` varchar(256) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `priceMin` int(11) DEFAULT NULL,
   `steppingPrice` int(11) DEFAULT NULL,
   `pPrice` varchar(512) COLLATE utf8_hungarian_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `products`
+--
+
+INSERT INTO `products` (`id`, `uid`, `title`, `description`, `images`, `postDate`, `owner`, `price`, `priceMin`, `steppingPrice`, `pPrice`) VALUES
+(3, 1, 'BMW', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,\r\nmolestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum\r\nnumquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium\r\noptio, eaque rerum! Provident similique accusantium nemo autem. Veritatis\r\nobcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam\r\nnihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,\r\ntenetur error, harum nesciunt ipsum debitis quas aliqu', '1_admin_BMW_1681069918392_20220811_111911.jpg;1_admin_BMW_1681069918393_20220811_112219.jpg;1_admin_BMW_1681069918394_20220811_112651.jpg', '04/09/2023 09:51:58 pm', 'admin', 20000, 1000, 1000, '16000?17000?16000?17000?18000?17000?16000?17000?18000?19000');
 
 -- --------------------------------------------------------
 
@@ -113,11 +152,20 @@ INSERT INTO `userslog` (`id`, `userId`, `date`, `workType`, `uname`, `workerUser
 (16, 1, '04/03/2023 10:08:31 pm', 'adminUpdateUser', 'admin', 'admin'),
 (17, 1, '04/03/2023 10:09:13 pm', 'adminUpdateUser', 'admin', 'admin'),
 (18, 1, '04/03/2023 10:35:34 pm', 'adminLoginUser', 'admin', '1'),
-(19, 1, '04/03/2023 10:52:07 pm', 'adminLoginUser', 'admin', '1');
+(19, 1, '04/03/2023 10:52:07 pm', 'adminLoginUser', 'admin', '1'),
+(20, 1, '04/16/2023 09:12:30 pm', 'adminLoginUser', 'admin', '1');
 
 --
 -- Indexek a kiírt táblákhoz
 --
+
+--
+-- A tábla indexei `bid_table`
+--
+ALTER TABLE `bid_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `uid` (`uid`),
+  ADD KEY `pid` (`pid`);
 
 --
 -- A tábla indexei `products`
@@ -145,10 +193,16 @@ ALTER TABLE `userslog`
 --
 
 --
+-- AUTO_INCREMENT a táblához `bid_table`
+--
+ALTER TABLE `bid_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
 -- AUTO_INCREMENT a táblához `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT a táblához `users`
@@ -160,11 +214,18 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT a táblához `userslog`
 --
 ALTER TABLE `userslog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Megkötések a kiírt táblákhoz
 --
+
+--
+-- Megkötések a táblához `bid_table`
+--
+ALTER TABLE `bid_table`
+  ADD CONSTRAINT `bid_table_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `bid_table_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `products` (`id`);
 
 --
 -- Megkötések a táblához `products`
